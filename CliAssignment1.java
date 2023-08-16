@@ -26,7 +26,7 @@ public class CliAssignment1 {
         final String DELETE_ACOOUNT = "Delete Account";
         String screen = DASHBOARD;
         int[] idArray = new int[0];
-        int[] balanceArray = new int[0];
+        double[] balanceArray = new double[0];
         String[] nameArray = new String[0];
         int idnum;
         boolean valid = true;
@@ -53,7 +53,7 @@ public class CliAssignment1 {
                     System.out.printf("%s%s%s \n", BLUE_COLOR_BOLD, "[6].Delete Account", RESET);
                     System.out.printf("%s%s%s \n\n", BLUE_COLOR_BOLD, "[7].Exit", RESET);
 
-                    System.out.printf("%s%s%s \n", WHITE_COLOR_BOLD, "Enter an option to continue : ", RESET);
+                    System.out.printf("%s%s%s%s", WHITE_COLOR_BOLD, "Enter an option to continue : ", RESET,LIGHT_BLUE_COLOR_BOLD);
 
                     int option = scanner.nextInt();
                     scanner.nextLine();
@@ -91,16 +91,13 @@ public class CliAssignment1 {
 
                     }
                     break;
-
                 }
-
                 case CREATE_ACCOUNT: {
+
                     idnum = idArray.length+1;
                     int[] newIdArray = new int[idArray.length + 1];
-                    System.out.println(Arrays.toString(newIdArray));
-
                     valid = false;
-                    System.out.printf("%sID : %s%sSDB-%05d %s \n", WHITE_COLOR_BOLD, RESET, LIGHT_BLUE_COLOR_BOLD,
+                    System.out.printf("%sID\t\t: %s%sSDB-%05d %s \n", WHITE_COLOR_BOLD, RESET, LIGHT_BLUE_COLOR_BOLD,
                             (idArray.length + 1), RESET);
                     for (int i = 0; i < idArray.length; i++) {
                         newIdArray[i] = idArray[i];
@@ -108,11 +105,10 @@ public class CliAssignment1 {
                     }
                     newIdArray[idArray.length] = idnum;
                     idArray = newIdArray;
-                    System.out.println(Arrays.toString(idArray));
                     loop: do {
                         valid = false;
 
-                        System.out.printf("%sName : %s ", WHITE_COLOR_BOLD, RESET);
+                        System.out.printf("%sName\t\t: %s%s", WHITE_COLOR_BOLD, RESET,LIGHT_BLUE_COLOR_BOLD);
                         String name = scanner.nextLine().strip();
                         String[] newNameArray = new String[nameArray.length + 1];
                         if (name.isBlank()) {
@@ -130,35 +126,42 @@ public class CliAssignment1 {
                         }
                         for (int i = 0; i < nameArray.length; i++) {
                             newNameArray[i] = nameArray[i];
-
                         }
                         newNameArray[nameArray.length] = name;
-                        System.out.println(Arrays.toString(newNameArray));
                         nameArray = newNameArray;
-
                     } while (valid);
 
                     do {
                         twoValidation = false;
-                        System.out.printf("%sInitial Deposit : %s ", WHITE_COLOR_BOLD, RESET);
-                        int initialDepost = scanner.nextInt();
+                        System.out.printf("%sInitial Deposit\t:%s%s ", WHITE_COLOR_BOLD, RESET,LIGHT_BLUE_COLOR_BOLD);
+                        double initialDepost = scanner.nextDouble();
+                        scanner.nextLine();
                         if (initialDepost < 5000) {
                             System.out.printf("%sInsufficient Amount%s\n", RED_COLOR_BOLD, RESET);
                             twoValidation = true;
                             continue;
                         }
-                        int[] newBalanceArray = new int[balanceArray.length + 1];
+                        double[] newBalanceArray = new double[balanceArray.length + 1];
                         for (int i = 0; i < balanceArray.length; i++) {
                             newIdArray[i] = idArray[i];
-
                         }
                         newBalanceArray[balanceArray.length] = initialDepost;
                         balanceArray = newBalanceArray;
-                        System.out.println(Arrays.toString(balanceArray));
 
                     } while (twoValidation);
-                    System.out.printf("%sID : %s%05d Name : %s has been created successfully. %s\n", GREEN_COLOR_BOLD,"SDK-",
+                    System.out.printf("\n%sID : %s%05d Name : %s has been created successfully. %s\n\n", GREEN_COLOR_BOLD,"SDK-",
                             idArray[idArray.length - 1], nameArray[nameArray.length - 1], RESET);
+                   
+                    System.out.printf("%sDo you want to add new student (Y/n)?  : %s%s ", WHITE_COLOR_BOLD, RESET,LIGHT_BLUE_COLOR_BOLD);
+                    String secondOption = scanner.nextLine().strip().toUpperCase();
+                    if (secondOption.equals("Y")) {
+                        screen = CREATE_ACCOUNT;
+                        valid = true;
+                        
+                    } else {
+                        screen = DASHBOARD;
+                        valid =true;
+                    }
 
                 }
 
